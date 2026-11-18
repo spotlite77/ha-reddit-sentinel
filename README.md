@@ -3,7 +3,7 @@
 **Read-only monitoring of Reddit communities for Home Assistant users.**
 Security advisories, vulnerability disclosures and breaking-change releases for the open-source software you self-host — delivered as notifications inside Home Assistant.
 
-> 🚧 **Status: in development.** Currently being tested on the author's own homelab. A first public release is planned once the core polling and matching engine is stable.
+> 🚧 **Status: v0.1 — core engine working.** The polling, matching, deduplication and Home Assistant notification pipeline is implemented and covered by offline tests. Live use requires your own approved Reddit API app (see Reddit's Responsible Builder Policy).
 
 ## Why
 
@@ -29,13 +29,43 @@ Default monitored subreddits: r/homeassistant, r/selfhosted, r/Zigbee2MQTT, r/je
 
 See [`config.example.yaml`](config.example.yaml).
 
+## Quick start (Docker)
+
+```bash
+git clone https://github.com/spotlite77/ha-reddit-sentinel.git
+cd ha-reddit-sentinel
+mkdir data
+cp config.example.yaml data/config.yaml
+# edit data/config.yaml: your Reddit app credentials, your inventory,
+# your Home Assistant URL and long-lived access token
+docker compose -f docker-compose.example.yml up -d --build
+```
+
+On its very first run, the service silently records the posts that already match (no notification flood about old posts) — only new posts trigger alerts.
+
+Without Docker, Python 3.11+ works too:
+
+```bash
+pip install -r requirements.txt
+python sentinel.py --config config.yaml          # daemon mode
+python sentinel.py --config config.yaml --once   # single pass (cron, tests)
+```
+
+## Development
+
+Offline tests (matching, deduplication, notification payloads — no network, no credentials):
+
+```bash
+python -m unittest discover -s tests -v
+```
+
 ## Roadmap
 
-- [ ] Polling engine + keyword/inventory matching
-- [ ] Home Assistant notifications (persistent notification + mobile push)
-- [ ] Deduplication and CVE identifier extraction
+- [x] Polling engine + keyword/inventory matching
+- [x] Home Assistant notifications (persistent notification + mobile push)
+- [x] Deduplication and CVE identifier extraction
 - [ ] Optional MQTT discovery sensors for Home Assistant
-- [ ] Docker image and HACS distribution
+- [ ] Docker image on a public registry and HACS distribution
 
 ## Reddit API compliance
 

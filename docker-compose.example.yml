@@ -1,0 +1,8 @@
+services:
+  ha-reddit-sentinel:
+    build: .
+    container_name: ha-reddit-sentinel
+    restart: unless-stopped
+    volumes:
+      # Folder holding your config.yaml (copied from config.example.yaml)
+      - ./data:/data

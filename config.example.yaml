@@ -5,6 +5,11 @@ reddit:
   client_id: "your-client-id"
   client_secret: "your-client-secret"
   user_agent: "ha-reddit-sentinel/0.1.0 (by u/your-username)"
+  # Optional user context, depending on your app type — leave empty for
+  # app-only (read-only) mode, which is enough for public listings:
+  # refresh_token: "your-refresh-token"        # "web app" type
+  # username: "your-username"                  # "script" type
+  # password: "your-password"                  # "script" type
 
 polling:
   interval_minutes: 30
