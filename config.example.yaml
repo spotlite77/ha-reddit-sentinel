@@ -1,0 +1,37 @@
+# HA Reddit Sentinel — example configuration
+
+reddit:
+  # Your own Reddit app credentials (https://www.reddit.com/prefs/apps)
+  client_id: "your-client-id"
+  client_secret: "your-client-secret"
+  user_agent: "ha-reddit-sentinel/0.1.0 (by u/your-username)"
+
+polling:
+  interval_minutes: 30
+  subreddits:
+    - homeassistant
+    - selfhosted
+    - Zigbee2MQTT
+    - jellyfin
+
+# Software and devices you run: a post must mention at least one of these…
+inventory:
+  - Home Assistant
+  - Zigbee2MQTT
+  - Jellyfin
+  - Nginx Proxy Manager
+  - Sonoff
+
+# …combined with at least one of these alert terms
+alert_keywords:
+  - security
+  - vulnerability
+  - CVE
+  - breaking change
+  - critical update
+  - zero-day
+
+home_assistant:
+  url: "http://homeassistant.local:8123"
+  token: "your-long-lived-access-token"
+  notify_service: "notify.mobile_app_your_phone"
